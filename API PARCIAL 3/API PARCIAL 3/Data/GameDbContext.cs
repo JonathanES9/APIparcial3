@@ -1,6 +1,15 @@
-﻿namespace API_PARCIAL_3.Data
+﻿using Microsoft.EntityFrameworkCore;
+using API_PARCIAL_3.Models;
+
+namespace API_PARCIAL_3.Data
 {
-    public class GameDbContext
+    public class GameDbContext : DbContext
     {
+        public GameDbContext(DbContextOptions<GameDbContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Attempt> Attempts { get; set; }
+
     }
 }
