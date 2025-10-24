@@ -1,4 +1,0 @@
-# Ignorar carpetas de Visual Studio y compilación
-.vs/
-[Bb]in/
-[Oo]bj/
