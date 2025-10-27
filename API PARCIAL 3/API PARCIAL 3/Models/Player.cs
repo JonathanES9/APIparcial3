@@ -1,7 +1,7 @@
 ﻿using System; // Para poder usar DateTime
 using System.ComponentModel.DataAnnotations; // Para las validaciones [Key] y [Required]
 
-namespace APIPARCIAL3.Models
+namespace API_PARCIAL_3.Models
 {
     public class Player
     {
