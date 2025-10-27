@@ -1,7 +1,3 @@
-﻿
-
-
-
 using Microsoft.EntityFrameworkCore; 
 using API_PARCIAL_3.Models;  
 
@@ -13,9 +9,9 @@ namespace API_PARCIAL_3.Data
         {
         }
 
-       public DbSet<Player> players { get; set; }
+        public DbSet<Player> players { get; set; }
         public DbSet<Game> Games { get; set; }
+        public DbSet<Attempt> Attempts { get; set; }
         
-      
     }
 }
