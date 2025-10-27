@@ -9,11 +9,14 @@ namespace API_PARCIAL_3.Models
             [Required]
             public int GameId { get; set; } 
              
-            public int SecretNumber { get; set; }
+            public string SecretNumber { get; set; }
 
             public DateTime CreateAt { get; set; }
 
-            public bool IsFinished { get; set; }
+            public bool IsFinished { get; set; } = false;
+
+            
+            public int PlayerId { get; set; }
         }
     
 }
