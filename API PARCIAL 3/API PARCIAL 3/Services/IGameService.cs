@@ -1,6 +1,10 @@
-﻿namespace API_PARCIAL_3.Services
+﻿using API_PARCIAL_3.DataTransferObjects;
+
+namespace API_PARCIAL_3.Services 
 {
-    public class IGameService
+    public interface IGameService
     {
+   
+        Task<RegisterPlayerResponse> RegisterPlayerAsync(RegisterPlayerRequest request);
     }
 }

@@ -1,15 +1,21 @@
-var builder = WebApplication.CreateBuilder(args);
+using API_PARCIAL_3.Data;
+using API_PARCIAL_3.Services;
+using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("SqlConnection"); 
+
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<GameDbContext>(options =>options.UseSqlServer(connectionString));
+builder.Services.AddScoped<IGameService, GameService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,3 +29,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
