@@ -4,4 +4,4 @@
 [Oo]bj/
 
 # Carpeta de migraciones 
-HybridDDDArchitecture/Infrastructure/Migrations/
+Migrations

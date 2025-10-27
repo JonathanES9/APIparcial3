@@ -1,15 +1,13 @@
-﻿using System; // Para poder usar DateTime
-using System.ComponentModel.DataAnnotations; // Para las validaciones [Key] y [Required]
-
-namespace APIPARCIAL3.Models
+﻿using System.ComponentModel.DataAnnotations; 
+namespace API_PARCIAL_3.Models
 {
     public class Player
     {
-        [Key] // Le dice a Entity Framework que esta es la Primary Key
+        [Key] 
         public int PlayerId { get; set; }
 
-        [Required] // Validación: este campo es obligatorio
-        [MaxLength(50)] // Validación: máximo 50 caracteres
+        [Required] 
+        [MaxLength(50)] 
         public required string FirstName { get; set; }
 
         [Required]
