@@ -26,6 +26,11 @@ namespace API_PARCIAL_3.Controllers
             
             var response = await _gameService.RegisterPlayerAsync(request);
 
+            if (response == null)
+            {
+                return BadRequest(new { message = "El usuario ya se encuentra registrado." });
+            }
+
             return Ok(response);
         }
 

@@ -22,13 +22,13 @@ namespace API_PARCIAL_3.Services
                 p.FirstName.ToLower() == request.FirstName.ToLower() &&
                 p.LastName.ToLower() == request.LastName.ToLower());
 
-         
+
             if (existingPlayer != null)
             {
-                return new RegisterPlayerResponse { PlayerId = existingPlayer.PlayerId };
+                return null;
             }
 
-          
+
             var newPlayer = new Player
             {
                 FirstName = request.FirstName,
