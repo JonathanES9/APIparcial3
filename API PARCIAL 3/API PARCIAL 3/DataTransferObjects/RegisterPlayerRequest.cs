@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations; 
 
-namespace APIparcial3.DataTransferObjects 
+namespace API_PARCIAL_3.DataTransferObjects 
 {
     public class RegisterPlayerRequest
     {

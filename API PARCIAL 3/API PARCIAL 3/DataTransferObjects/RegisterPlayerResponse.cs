@@ -1,4 +1,4 @@
-﻿namespace APIPARCIAL3.DataTransferObjects 
+﻿namespace API_PARCIAL_3.DataTransferObjects 
 {
     public class RegisterPlayerResponse
     {

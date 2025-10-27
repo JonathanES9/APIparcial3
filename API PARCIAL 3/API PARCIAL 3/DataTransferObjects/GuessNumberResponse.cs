@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace API_PARCIAL_3.DataTranferObjects
+namespace API_PARCIAL_3.DataTransferObjects
 {
     public class GuessNumberResponse
     {
