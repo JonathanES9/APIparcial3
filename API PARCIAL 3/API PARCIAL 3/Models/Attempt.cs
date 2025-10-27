@@ -9,9 +9,6 @@ namespace API_PARCIAL_3.Models
     {
         public int AttemptId { get; set; }
 
-        [Required]
-        public int GameId { get; set; }
-
         public Game Game { get; set; } = null!;
 
         [Required]
@@ -20,6 +17,6 @@ namespace API_PARCIAL_3.Models
 
         public DateTime AttemptedAt { get; set; } = DateTime.UtcNow;
 
-        public string ResultMessage { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
     }
 }
