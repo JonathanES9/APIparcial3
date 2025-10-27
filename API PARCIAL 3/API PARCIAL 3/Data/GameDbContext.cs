@@ -4,7 +4,6 @@
 
 using Microsoft.EntityFrameworkCore; 
 using API_PARCIAL_3.Models;  
-using System.Collections.Generic;
 
 namespace API_PARCIAL_3.Data
 {
@@ -14,9 +13,9 @@ namespace API_PARCIAL_3.Data
         {
         }
 
-       
+       public DbSet<Player> players { get; set; }
         public DbSet<Game> Games { get; set; }
-
+        
       
     }
 }
