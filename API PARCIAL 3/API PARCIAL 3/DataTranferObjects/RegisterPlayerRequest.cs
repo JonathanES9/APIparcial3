@@ -10,7 +10,7 @@ namespace APIparcial3.DataTransferObjects
         [Required(ErrorMessage = "El nombre es obligatorio.")]
         public required string FirstName { get; set; }
 
-        [Required(ErrorMessage = "La edad es obligatoria.")]
+        [Required(ErrorMessage = "La edad es obligatoria.")] // Ver si se necesita que sea Required
         public int Age { get; set; }
     }
 }
