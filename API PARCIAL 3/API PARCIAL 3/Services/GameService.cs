@@ -1,7 +1,8 @@
 ﻿using API_PARCIAL_3.Data;
 using API_PARCIAL_3.DataTransferObjects;
 using API_PARCIAL_3.Models;
-using Microsoft.EntityFrameworkCore;    
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 
 namespace API_PARCIAL_3.Services
@@ -9,12 +10,13 @@ namespace API_PARCIAL_3.Services
     public class GameService : IGameService
     {
         private readonly GameDbContext _context;
-
-        public GameService(GameDbContext context)
+        private readonly ILogger<GameService> _logger;
+        public GameService(GameDbContext context, ILogger<GameService> logger)
         {
             _context = context;
+            _logger = logger; 
         }
-
+        //ENTIDAD PAYER JONI
         public async Task<RegisterPlayerResponse> RegisterPlayerAsync(RegisterPlayerRequest request)
         {
 
@@ -50,9 +52,7 @@ namespace API_PARCIAL_3.Services
             return response;
         }
 
-       
-    }
-    // --- ¡ENTIDAD GAME JERE! ---
+        // --- ¡ENTIDAD GAME JERE! ---
         public async Task<StartGameResponse> StartGameAsync(StartGameRequest request)
         {
 
@@ -120,3 +120,5 @@ namespace API_PARCIAL_3.Services
             return result;
         }
     }
+}    
+    

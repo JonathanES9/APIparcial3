@@ -32,9 +32,6 @@ namespace API_PARCIAL_3.Controllers
             return Ok(response);
         }
 
-      
-    }
-
         //CONTROLLER - START GAME JERE
         [HttpPost("start")]
         public async Task<IActionResult> StartGame([FromBody] StartGameRequest request)
@@ -60,6 +57,9 @@ namespace API_PARCIAL_3.Controllers
                 return StatusCode(500, new { message = "Error interno del servidor." });
             }
         }
-
     }
+
+       
+
+    
 }
