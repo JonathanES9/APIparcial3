@@ -2,8 +2,7 @@
 using API_PARCIAL_3.DataTransferObjects;
 using API_PARCIAL_3.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-
+using GameCore;
 
 namespace API_PARCIAL_3.Services
 {
@@ -27,7 +26,7 @@ namespace API_PARCIAL_3.Services
 
             if (existingPlayer != null)
             {
-                return null;
+                return null; 
             }
 
 
@@ -118,6 +117,64 @@ namespace API_PARCIAL_3.Services
                 digits.RemoveAt(index);
             }
             return result;
+        }
+
+
+
+        //parte Attempt
+        public async Task<GuessNumberResponse> GuessNumberAsync(GuessNumberRequest request)
+        {
+            var game = await _context.Games.FirstOrDefaultAsync(g => g.GameId == request.GameId);
+
+            if (game == null)
+                throw new KeyNotFoundException($"El juego {request.GameId} no existe.");
+
+            if (game.IsFinished)
+            {
+                return new GuessNumberResponse
+                {
+                    Gameid = game.GameId,
+                    AttemptedNumber = request.AttemptedNumber,
+                    Message = $"El juego {game.GameId} ya ha finalizado."
+                };
+            }
+
+            var number = request.AttemptedNumber;
+            if (number.Length != 4 || number.Distinct().Count() != 4 || !number.All(char.IsDigit))
+                throw new ArgumentException("Formato inválido: el número debe tener 4 dígitos numéricos distintos, sin repeticiones.");
+
+
+            var result = Evaluator.ValidateAttempt(game.SecretNumber, request.AttemptedNumber);
+
+
+            var attemptEntity = new Attempt
+            {
+                Game = game,
+                AttemptedNumber = number,
+                Message = result.Message,
+                AttemptedAt = DateTime.UtcNow
+            };
+
+            _context.Attempts.Add(attemptEntity);
+
+            if (result.Fama == 4)
+                game.IsFinished = true;
+
+            _logger.LogInformation("Juego finalizado: GameId, Intentos totales");
+
+            await _context.SaveChangesAsync();
+
+            return new GuessNumberResponse
+            {
+                Gameid = game.GameId,
+                AttemptedNumber = number,
+                Message = result.Message
+            };
+        }
+
+        public Task<StartGameResponse> GuessNumberAsync(StartGameRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }    

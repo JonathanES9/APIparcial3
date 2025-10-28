@@ -1,6 +1,5 @@
 ﻿using API_PARCIAL_3.DataTransferObjects;
 using API_PARCIAL_3.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_PARCIAL_3.Controllers
@@ -62,9 +61,36 @@ namespace API_PARCIAL_3.Controllers
                 return StatusCode(500, new { message = "Error interno del servidor." });
             }
         }
+
+
+
+        [HttpPost("guess")]
+        public async Task<IActionResult> GuessNumber([FromBody] GuessNumberRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var response = await _gameService.GuessNumberAsync(request);
+
+                return Ok(response);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                return NotFound(new { message = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error interno al procesar el intento.");
+                return StatusCode(500, new { message = "Error interno del servidor." });
+            }
+        }
     }
-
-       
-
-    
 }

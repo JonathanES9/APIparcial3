@@ -7,5 +7,6 @@ namespace API_PARCIAL_3.Services
    
         Task<RegisterPlayerResponse> RegisterPlayerAsync(RegisterPlayerRequest request);
         Task<StartGameResponse> StartGameAsync(StartGameRequest request);
+        Task<GuessNumberResponse> GuessNumberAsync(GuessNumberRequest request);
     }
 }
