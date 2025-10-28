@@ -27,7 +27,7 @@ namespace API_PARCIAL_3.Services
 
             if (existingPlayer != null)
             {
-                return new RegisterPlayerResponse { PlayerId = existingPlayer.PlayerId };
+                return null;
             }
 
 
