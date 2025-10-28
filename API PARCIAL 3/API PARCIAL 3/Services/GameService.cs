@@ -18,7 +18,7 @@ namespace API_PARCIAL_3.Services
         //ENTIDAD PAYER JONI
         public async Task<RegisterPlayerResponse> RegisterPlayerAsync(RegisterPlayerRequest request)
         {
-
+            _logger.LogInformation("Intento de registro para: {FirstName} {LastName}", request.FirstName, request.LastName);
             var existingPlayer = await _context.Players.FirstOrDefaultAsync(p =>
                 p.FirstName.ToLower() == request.FirstName.ToLower() &&
                 p.LastName.ToLower() == request.LastName.ToLower());
@@ -26,7 +26,10 @@ namespace API_PARCIAL_3.Services
 
             if (existingPlayer != null)
             {
-                return null; 
+             
+                _logger.LogWarning("Intento de registro fallido: El jugador {FirstName} {LastName} ya existe (PlayerId: {PlayerId}).", existingPlayer.FirstName, existingPlayer.LastName, existingPlayer.PlayerId); 
+
+                throw new InvalidOperationException("El jugador ya se encuentra registrado.");
             }
 
 
@@ -42,7 +45,7 @@ namespace API_PARCIAL_3.Services
             _context.Players.Add(newPlayer);
 
             await _context.SaveChangesAsync();
-
+            _logger.LogInformation("Nuevo jugador registrado: {FirstName} {LastName}, (PlayerId: {PlayerId}).", newPlayer.FirstName, newPlayer.LastName, newPlayer.PlayerId); 
             var response = new RegisterPlayerResponse
             {
                 PlayerId = newPlayer.PlayerId
