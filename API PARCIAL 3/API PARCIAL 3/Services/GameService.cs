@@ -127,10 +127,14 @@ namespace API_PARCIAL_3.Services
         //parte Attempt
         public async Task<GuessNumberResponse> GuessNumberAsync(GuessNumberRequest request)
         {
+            _logger.LogInformation("Procesando intento: GameId {GameId}, Número {AttemptedNumber}", request.GameId, request.AttemptedNumber);
             var game = await _context.Games.FirstOrDefaultAsync(g => g.GameId == request.GameId);
 
             if (game == null)
+            {
+                _logger.LogWarning("Intento fallido: el juego {GameId} no existe.", request.GameId);
                 throw new KeyNotFoundException($"El juego {request.GameId} no existe.");
+            }
 
             if (game.IsFinished)
             {
@@ -144,11 +148,14 @@ namespace API_PARCIAL_3.Services
 
             var number = request.AttemptedNumber;
             if (number.Length != 4 || number.Distinct().Count() != 4 || !number.All(char.IsDigit))
+            {
+                _logger.LogWarning("Número inválido: {AttemptedNumber}. Debe tener 4 dígitos numéricos únicos.", number);
                 throw new ArgumentException("Formato inválido: el número debe tener 4 dígitos numéricos distintos, sin repeticiones.");
-
+            }
 
             var result = Evaluator.ValidateAttempt(game.SecretNumber, request.AttemptedNumber);
 
+            _logger.LogInformation("Evaluación completada: GameId {GameId}, Número {AttemptedNumber}, Resultado: {Message}", game.GameId, number, result.Message);
 
             var attemptEntity = new Attempt
             {
@@ -161,11 +168,14 @@ namespace API_PARCIAL_3.Services
             _context.Attempts.Add(attemptEntity);
 
             if (result.Fama == 4)
+            {
                 game.IsFinished = true;
-
-            _logger.LogInformation("Juego finalizado: GameId, Intentos totales");
+                _logger.LogInformation("Juego finalizado por adivinanza correcta: GameId {GameId}", game.GameId);
+            }
 
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Intento registrado exitosamente: GameId {GameId}, AttemptedNumber {AttemptedNumber}", game.GameId, number);
 
             return new GuessNumberResponse
             {
@@ -173,11 +183,6 @@ namespace API_PARCIAL_3.Services
                 AttemptedNumber = number,
                 Message = result.Message
             };
-        }
-
-        public Task<StartGameResponse> GuessNumberAsync(StartGameRequest request)
-        {
-            throw new NotImplementedException();
         }
     }
 }    
